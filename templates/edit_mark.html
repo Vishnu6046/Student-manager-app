@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>edit mark</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Edit Mark</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header text-center">
+            <h4 class="mb-0">Edit Mark — {{ mark.student.user.username }} ({{ mark.subject.name }})</h4>
+        </div>
+        <div class="card-body">
+            <form method="post" novalidate>
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">Subject</label>
+                    {{ form.subject }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Mark</label>
+                    {{ form.marks_obtained }}
+                    {% if form.marks_obtained.errors %}
+                        <div class="text-danger small">{{ form.marks_obtained.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{% url 'edit_student' mark.student.id %}" class="btn btn-back">← Back</a>
+                    <button type="submit" class="btn btn-outline-success px-4 py-2 rounded-3">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

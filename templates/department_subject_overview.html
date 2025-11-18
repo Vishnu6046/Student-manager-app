@@ -1,0 +1,51 @@
+{% extends 'admin_home.html' %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <h3 class="fw-bold mb-4 text-primary">Departments & Subjects</h3>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% for dept in departments %}
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{ dept.name }}
+                </h5>
+
+                <ul class="list-group mb-3">
+                    {% for subject in dept.subjects.all %}
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>{{ subject.code }} — {{ subject.name }}</span>
+                        </li>
+                    {% empty %}
+                        <li class="list-group-item text-muted">No subjects available.</li>
+                    {% endfor %}
+                </ul>
+
+                <a href="{% url 'subject_add' dept.id %}" 
+                   class="btn btn-sm btn-outline-primary">
+                    ➕ Add New Subject
+                </a>
+
+            </div>
+        </div>
+
+    {% endfor %}
+
+    <div class="mb-3">
+        <a href="{% url 'admin_home' %}" class="btn btn-outline-secondary px-4 py-2 rounded-3">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+</div>
+{% endblock %}

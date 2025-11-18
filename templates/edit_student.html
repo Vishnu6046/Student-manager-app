@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>edit student</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Edit Student</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="card mb-4">
+        <div class="card-header text-center">
+            <h4 class="mb-0">Edit Student Details: {{ student.user.username }}</h4>
+            <h4 class="mb-0">Department : {{ student.department }}</h4>
+        </div>
+        <div class="card-body">
+            <form method="post" novalidate>
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">First Name</label>
+                    {{ student_form.first_name }}
+                    {% if student_form.first_name.errors %}
+                        <div class="text-danger small">{{ student_form.first_name.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Last Name</label>
+                    {{ student_form.last_name }}
+                    {% if student_form.last_name.errors %}
+                        <div class="text-danger small">{{ student_form.last_name.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email ID</label>
+                    {{ student_form.email }}
+                    {% if student_form.email.errors %}
+                        <div class="text-danger small">{{ student_form.email.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{% url 'staff_home' %}" class="btn btn-back">← Back to Dashboard</a>
+                    <button type="submit" class="btn btn-outline-success px-4 py-2 rounded-3">Save Details</button>
+                </div>
+
+            </form>
+            
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header text-center">
+            <h4 class="mb-0">Marks</h4>
+        </div>
+        <a href="{% url 'add_mark' student.id %}" class="btn btn-outline-light btn-sm bg-success text-white">
+            + Add New Subject & Marks
+        </a>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Marks</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for mark in marks %}
+                        <tr>
+                            <td>{{ mark.subject.name }}</td>
+                            <td>{{ mark.marks_obtained }}</td>
+                            <td>
+                                <a href="{% url 'edit_mark' mark.id %}" class="btn btn-sm btn-primary">Edit</a>
+                                <a href="{% url 'delete_mark' mark.id %}"
+                                class="btn btn-sm btn-danger"
+                                onclick="return confirm('Are you sure you want to delete this mark?');">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center text-muted">No marks available.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

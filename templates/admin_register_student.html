@@ -1,0 +1,104 @@
+{% extends 'admin_home.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="card-body px-4 py-3">
+
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            {% for error in form.non_field_errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+
+        <!-- Username -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Username</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+                <div class="text-danger small">{{ form.username.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- first name -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">First Name</label>
+            {{ form.first_name }}
+            {% if form.first_name.errors %}
+                <div class="text-danger small">{{ form.first_name.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- last name -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Last Name</label>
+            {{ form.last_name }}
+            {% if form.last_name.errors %}
+                <div class="text-danger small">{{ form.last_name.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Email</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+                <div class="text-danger small">{{ form.email.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Password</label>
+            {{ form.password }}
+            <div class="form-text text-muted">
+                Password must be at least 8 characters long, include uppercase, lowercase, number, and symbol.
+            </div>
+            {% if form.password.errors %}
+                <div class="text-danger small">{{ form.password.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Confirm Password</label>
+            {{ form.confirm_password }}
+            {% if form.confirm_password.errors %}
+                <div class="text-danger small">{{ form.confirm_password.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Department -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Department</label>
+            {{ form.department }}
+            {% if form.department.errors %}
+                <div class="text-danger small">{{ form.department.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Roll Number -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Roll Number</label>
+            <input type="text" class="form-control" value="Auto-generated after saving" readonly>
+            <div class="form-text text-muted">
+                Roll number is generated automatically and cannot be edited.
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <a href="{% url 'manage_students' %}" class="btn btn-outline-danger px-4 py-2 rounded-3">← Back to student list</a>
+            <button type="submit" class="btn btn-outline-success px-4 py-2 rounded-3">Add Student</button>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}

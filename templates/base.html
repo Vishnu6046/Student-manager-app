@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Dashboard{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Student Portal</a>
+        <a class="navbar-brand" href="{%url 'logout'%}">Logout</a>
+        <span class="text-white me-3">Logged in as {{ user.username }}</span>
+    </nav>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script>
+        (function () {
+            window.history.pushState(null, "", window.location.href);
+            window.onpopstate = function () {
+                window.history.pushState(null, "", window.location.href);
+            };
+        })();
+    </script>
+
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+</html>

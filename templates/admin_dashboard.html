@@ -1,0 +1,70 @@
+{% extends 'admin_home.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="main">
+    <h2>Welcome, {{ request.user.username }}</h2>
+
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card text-center p-4 bg-light">
+            <h5>Total Users</h5>
+            <h2>{{ total_users }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card text-center p-4 bg-light">
+            <h5>Total Students</h5>
+            <h2>{{ total_students }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card text-center p-4 bg-light">
+            <h5>Total Staff</h5>
+            <h2>{{ total_staff }}</h2>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+
+    <h3 class="fw-bold mb-3 text-primary">Admin Controls</h3>
+
+    <div class="row g-3">
+
+        <!-- Manage Departments -->
+        <div class="col-md-6">
+            <a href="{% url 'manage_department' %}" 
+               class="btn btn-outline-primary w-100 py-3 fw-semibold rounded-3 shadow-sm">
+                📚 Add or delete Departments
+            </a>
+        </div>
+
+        <!-- Manage Positions -->
+        <div class="col-md-6">
+            <a href="{% url 'manage_position' %}"
+               class="btn btn-outline-success w-100 py-3 fw-semibold rounded-3 shadow-sm">
+                👔 Manage Staff Positions
+            </a>
+        </div>
+
+        <!-- View Department & Subject List -->
+        <div class="col-md-6">
+            <a href="{% url 'dept_subject_overview' %}"
+            class="btn btn-outline-warning w-100 py-3 fw-semibold rounded-3 shadow-sm">
+                🏛️ View Departments & Subjects
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

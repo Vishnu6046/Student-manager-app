@@ -1,0 +1,27 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h2>Welcome to the school management page.</h2>
+        <p>Select your login type:</p>
+
+        <!-- Login Buttons -->
+        <div class="container mt-5">
+            <a href="{% url 'student_login' %}" class="btn btn-primary btn-custom">Student Login</a>
+            <a href="{% url 'staff_login' %}" class="btn btn-success btn-custom">Staff Login</a>
+            <a href="{% url 'admin_login' %}" class="btn btn-danger btn-custom">Admin Login</a>
+        </div>
+    </div>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+</html>

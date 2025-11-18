@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Subject & Marks</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-primary text-white text-center">
+            <h4>Add New Subject & Marks for {{ student.user.username }}</h4>
+        </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                     <div class="mb-3">
+                        <label class="form-label">Subject</label>
+                        {{ form.subject }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Marks Obtained</label>
+                        {{ form.marks_obtained }}
+                        {% if form.marks_obtained.errors %}
+                            <div class="text-danger small">{{ form.marks_obtained.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'edit_student' student.id %}" class="btn btn-secondary">← Back</a>
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+                </form>
+            </div>
+    </div>
+</div>
+
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

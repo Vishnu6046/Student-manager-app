@@ -141,3 +141,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
+
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://student-manager-app-6mc5.onrender.com'
+]

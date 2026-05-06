@@ -140,10 +140,22 @@ def admin_login(request):
 
 @never_cache
 def logout_view(request):
+    user_type = None
+
     if request.user.is_authenticated:
         profile = Profile.objects.filter(user=request.user).first()
         if profile:
+            user_type = profile.user_type
             profile.session_key = None
             profile.save()
+
     auth_logout(request)
-    return redirect('public')  
+
+    if user_type == 'admin':
+        return redirect('admin_login')
+    elif user_type == 'staff':
+        return redirect('staff_login')
+    elif user_type == 'student':
+        return redirect('student_login')
+
+    return redirect('public') 

@@ -21,8 +21,11 @@ class RedirectAuthenticatedUserMiddleware(MiddlewareMixin):
                         return redirect('admin_home')
 
 class NoCacheMiddleware(MiddlewareMixin):
-    def process_response(self, request, response):
+    def __init__(self, get_response):
+        self.get_response = get_response
 
+    def __call__(self, request):
+        response = self.get_response(request)
         response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
         response['Pragma'] = 'no-cache'
         response['Expires'] = '0'

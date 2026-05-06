@@ -9,12 +9,14 @@ from django.db.models import Max, Q
 from django.contrib.auth.models import Group, User
 from home_setup.forms import StudentCreateForm, StudentProfileForm, MarkForm, EditStudentUserForm
 from .models import AdminProfile
+from django.views.decorators.cache import never_cache
 
 # Create your views here.
 
 def is_admin(user):
     return user.is_superuser or user.groups.filter(name='admin').exists()
 
+@never_cache
 @login_required(login_url='/login/admin/')
 @user_passes_test(is_admin)
 def admin_home(request):
@@ -29,6 +31,7 @@ def admin_home(request):
     }
     return render(request, 'admin_dashboard.html', context)
 
+@never_cache
 @login_required(login_url='/login/admin/')
 @user_passes_test(is_admin)
 def manage_students(request):
@@ -47,6 +50,7 @@ def manage_students(request):
         'selected_dept': selected_dept,
     })
 
+@never_cache
 @login_required(login_url='/login/admin/')
 @user_passes_test(is_admin)
 def delete_student(request, student_id):
@@ -58,6 +62,7 @@ def delete_student(request, student_id):
     messages.success(request, f"Student '{username}' has been deleted successfully.")
     return redirect('manage_students')
 
+@never_cache
 @login_required(login_url='/login/admin/')
 @user_passes_test(is_admin)
 def manage_staff(request):
@@ -76,6 +81,7 @@ def manage_staff(request):
         'selected_dept': selected_dept,
     })
 
+@never_cache
 @login_required(login_url='/login/admin/')
 @user_passes_test(is_admin)
 def delete_staff(request, employee_id):
@@ -87,6 +93,7 @@ def delete_staff(request, employee_id):
 
     return redirect('manage_staff')
 
+@never_cache
 @login_required(login_url='/login/admin/')
 @user_passes_test(is_admin)
 def manage_users(request):
@@ -113,6 +120,7 @@ def manage_users(request):
         'search_query': search_query,
     })
 
+@never_cache
 @login_required(login_url='/login/admin/')
 @user_passes_test(is_admin)
 def admin_register(request):
@@ -149,7 +157,7 @@ def admin_register(request):
 
     return render(request, 'admin_register.html', {'form': form})
 
-
+@never_cache
 @login_required(login_url='/login/admin/')
 @user_passes_test(is_admin)
 def admin_register_student(request):
@@ -187,6 +195,7 @@ def admin_register_student(request):
     
     return render(request, 'admin_register_student.html', {'form': form})
 
+@never_cache
 @login_required(login_url='/login/admin/')
 @user_passes_test(is_admin)
 def admin_register_staff(request):
@@ -223,6 +232,7 @@ def admin_register_staff(request):
 
     return render(request, 'admin_register_staff.html', {'user_form': user_form, 'profile_form': profile_form,})
 
+@never_cache
 @login_required(login_url='/login/admin/')
 @user_passes_test(is_admin)
 def manage_department(request):
@@ -240,7 +250,7 @@ def manage_department(request):
         "form": form
     })
 
-
+@never_cache
 @login_required(login_url='/login/admin/')
 @user_passes_test(is_admin)
 def delete_department(request, dept_id):
@@ -248,7 +258,7 @@ def delete_department(request, dept_id):
     dept.delete()
     return redirect('manage_department')
 
-
+@never_cache
 @login_required(login_url='/login/admin/')
 @user_passes_test(is_admin)
 def manage_position(request):
@@ -266,6 +276,7 @@ def manage_position(request):
         "form": form
     })
 
+@never_cache
 @login_required(login_url='/login/admin/')
 @user_passes_test(is_admin)
 def delete_position(request, pos_id):
@@ -273,7 +284,7 @@ def delete_position(request, pos_id):
     pos.delete()
     return redirect('manage_position')
 
-
+@never_cache
 @login_required(login_url='/login/admin/')
 @user_passes_test(is_admin)
 def delete_user(request, user_id):
@@ -287,14 +298,14 @@ def delete_user(request, user_id):
     messages.success(request, "User deleted successfully.")
     return redirect('manage_users')
 
-
+@never_cache
 @login_required(login_url='/login/admin/')
 @user_passes_test(is_admin)
 def department_subject_overview(request):
     departments = Department.objects.all().prefetch_related('subjects')
     return render(request, 'department_subject_overview.html', {'departments': departments})
 
-
+@never_cache
 @login_required(login_url='/login/admin/')
 @user_passes_test(is_admin)
 def add_subject(request, dept_id):

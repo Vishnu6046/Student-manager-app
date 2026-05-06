@@ -7,9 +7,11 @@ from django.contrib import messages
 from profile_setup.models import Profile
 from django.db.models import Max
 from django.urls import reverse
+from django.views.decorators.cache import never_cache
 
 # Create your views here.
 
+@never_cache
 @login_required(login_url='/login/student/')
 def student_home(request):
     student = StudentProfile.objects.get(user=request.user)
@@ -26,6 +28,7 @@ def student_home(request):
 def is_staff(user):
     return user.groups.filter(name='staff').exists()
 
+@never_cache
 @login_required(login_url='/login/staff/')
 @user_passes_test(is_staff)
 def staff_home(request):
@@ -48,6 +51,7 @@ def staff_home(request):
         'selected_dept': selected_dept,
     })
 
+@never_cache
 @login_required(login_url='/login/staff/')
 @user_passes_test(is_staff)
 def edit_student(request, student_id):
@@ -69,6 +73,7 @@ def edit_student(request, student_id):
         'marks': marks,
     })
 
+@never_cache
 @login_required(login_url='/login/staff/')
 @user_passes_test(is_staff)
 def edit_mark(request, mark_id):
@@ -84,6 +89,7 @@ def edit_mark(request, mark_id):
 
     return render(request, 'edit_mark.html', {'form': form, 'mark': mark})
 
+@never_cache
 @login_required(login_url='/login/staff/')
 @user_passes_test(is_staff)
 def add_student(request):
@@ -121,6 +127,7 @@ def add_student(request):
     
     return render(request, 'add_student.html', {'form': form})
 
+@never_cache
 @login_required(login_url='/login/staff/')
 @user_passes_test(is_staff)
 def add_mark(request, student_id):
@@ -148,7 +155,7 @@ def add_mark(request, student_id):
 
     return render(request, 'add_mark.html', {'form': form, 'student': student})
 
-
+@never_cache
 @login_required(login_url='/login/staff/')
 @user_passes_test(is_staff)
 def delete_mark(request, mark_id):

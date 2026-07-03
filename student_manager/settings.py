@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
-import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-f259s6#-4mr5!cg8*nu2fhtw4)s3mweavit$q==7weryo9jb$#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = [ 'student-manager-app-6mc5.onrender.com' ]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -81,9 +80,14 @@ WSGI_APPLICATION = 'student_manager.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL')
-    )
+    'default':{
+        'ENGINE':'django.db.backends.postgresql',
+        'NAME':'student_manager_db',
+        'USER':'vishnu',
+        'PASSWORD':'vishnu',
+        'HOST':'localhost',
+        'PORT':'5432',
+    }
 }
 
 
